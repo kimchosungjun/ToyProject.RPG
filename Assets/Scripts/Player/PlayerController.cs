@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float playerSpeed = 10f;
+    Animator anim;
+    PlayerState playerState = PlayerState.Idle;
+
+    [Header("플레이어 이동 관련 변수")]
     Vector3 destinationPos;
-    bool moveDestination = false;
+    [SerializeField] float playerSpeed = 10f;
+
+    void Awake()
+    {
+        anim = gameObject.GetComponent<Animator>();
+    }
 
     void Start()
     {
@@ -15,22 +23,36 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerInputMouse(MouseEvent evt)
     {
-        if (evt != MouseEvent.Click)
+        if (playerState==PlayerState.Dead)
             return;
+        playerState = PlayerState.Move;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 100f, Color.red, 1.0f);
         RaycastHit rayHit;
         if (Physics.Raycast(ray, out rayHit, 100.0f, LayerMask.GetMask("Ground")))
-        {
             destinationPos = rayHit.point;
-            moveDestination = true;
-        }
     }
 
     void Update()
     {
-        if(moveDestination)
-            PlayerMove();    
+        switch (playerState)
+        {
+            case PlayerState.Idle:
+                UpdateIdle();
+                break;
+            case PlayerState.Move:
+                UpdateMove();
+                break;
+            case PlayerState.Jump:
+                UpdateJump();
+                break;
+            case PlayerState.Hit:
+                UpdateHit();
+                break;
+            case PlayerState.Dead:
+                UpdateDead();
+                break;
+        }
     }
 
     void PlayerMove()
@@ -38,7 +60,7 @@ public class PlayerController : MonoBehaviour
         Vector3 dir = destinationPos - transform.position;
         if (dir.magnitude < 0.1f)
         {
-            moveDestination = false;
+            playerState = PlayerState.Idle;
         }
         else
         {
@@ -46,5 +68,29 @@ public class PlayerController : MonoBehaviour
             transform.position += dir.normalized * moveDist;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
         }
+    }
+    void UpdateIdle() 
+    {
+        anim.SetFloat("Speed", 0);
+    }
+
+    void UpdateMove()
+    {
+        PlayerMove();
+        anim.SetFloat("Speed", playerSpeed);
+    }
+    void UpdateJump()
+    {
+
+    }
+
+    void UpdateHit()
+    {
+        anim.SetTrigger("Hit");
+    }
+
+    void UpdateDead()
+    {
+        anim.SetTrigger("Dead");
     }
 }

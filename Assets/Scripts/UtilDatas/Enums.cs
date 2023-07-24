@@ -12,3 +12,12 @@ public enum MouseEvent
     Press,
     Click
 }
+
+public enum PlayerState
+{
+    Idle,
+    Move,
+    Jump,
+    Hit,
+    Dead
+}
