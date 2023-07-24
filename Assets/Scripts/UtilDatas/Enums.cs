@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enums : MonoBehaviour
+public enum CameraMode
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    QuarterView
+}
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+public enum MouseEvent
+{
+    Press,
+    Click
 }

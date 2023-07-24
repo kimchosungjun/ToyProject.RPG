@@ -10,7 +10,8 @@ public class MasterManager : MonoBehaviour
     ResourceManager resource = new ResourceManager();
     public static ResourceManager Resource { get { return Instance.resource; } }
 
-
+    EventManager _event = new EventManager();
+    public static EventManager Event { get {return Instance._event; } }
     
     void Start()
     {
@@ -27,4 +28,8 @@ public class MasterManager : MonoBehaviour
         }    
     }
 
+    void Update()
+    {
+        _event.EventUpdate();
+    }
 }
