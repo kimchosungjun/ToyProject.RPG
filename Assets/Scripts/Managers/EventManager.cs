@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.EventSystems;
 
 public class EventManager 
 {
@@ -11,6 +12,8 @@ public class EventManager
 
     public void EventUpdate()
     {
+        if (EventSystem.current.IsPointerOverGameObject()) // UI가 클릭되면 실행이 안됨
+            return;
         if (Input.anyKey && playerMoveAction != null)
             playerMoveAction.Invoke();
         if(PlayerMouseMove != null)

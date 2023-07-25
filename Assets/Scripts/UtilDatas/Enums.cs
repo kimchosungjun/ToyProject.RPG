@@ -21,3 +21,30 @@ public enum PlayerState
     Hit,
     Dead
 }
+
+public enum Buttons
+{
+    PointBtn,
+}
+
+public enum Texts
+{
+    PointText,
+    ScoreText
+}
+
+public enum Images
+{
+    Image,
+}
+
+public enum GameObjects
+{
+    TestObject,
+}
+
+public enum UIEvent
+{
+    Click,
+    Drag,
+}
