@@ -41,10 +41,25 @@ public enum Images
 public enum GameObjects
 {
     TestObject,
+    GridPanel
 }
 
 public enum UIEvent
 {
     Click,
     Drag,
+}
+
+public enum InvenItem
+{
+    ItemIcon,
+    ItemNameText,
+}
+
+public enum Scene
+{
+    Default,
+    Login,
+    Lobby,
+    Game
 }

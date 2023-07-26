@@ -12,8 +12,13 @@ public class MasterManager : MonoBehaviour
 
     EventManager _event = new EventManager();
     public static EventManager Event { get {return Instance._event; } }
+    UIManager ui = new UIManager();
+    public static UIManager UI {  get { return Instance.ui; } }
+
+    SceneLoadManager scene = new SceneLoadManager();
+    public static SceneLoadManager Scene { get { return Instance.scene; } }
     
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {

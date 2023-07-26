@@ -5,19 +5,25 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
 
-public class UIButton : UIBase
+public class UIButton : UIPopup
 {
     int score = 0;
+    
     void Start()
     {
+        Init();    
+    }
+
+    public override void Init()
+    {
+        base.Init();
         Bind<Button>(typeof(Buttons));
         Bind<Text>(typeof(Texts));
         Bind<Image>(typeof(Images));
-        GetButton((int)Buttons.PointBtn).gameObject.AddUIEvent(ClickBtn);
+        GetButton((int)Buttons.PointBtn).gameObject.BindEvent(ClickBtn);
 
         GameObject go = GetImage((int)Images.Image).gameObject;
-        AddUIEvent(go, (PointerEventData data)=> { go.transform.position = data.position; }, UIEvent.Drag);
-       
+        BindEvent(go, (PointerEventData data) => { go.transform.position = data.position; }, UIEvent.Drag);
     }
 
     public void ClickBtn(PointerEventData data)

@@ -5,9 +5,12 @@ using UnityEngine.UI;
 using System;
 using UnityEngine.EventSystems;
 
-public class UIBase : MonoBehaviour
+public abstract class UIBase : MonoBehaviour
 {
     Dictionary<Type, UnityEngine.Object[]> dicObjects = new Dictionary<Type, UnityEngine.Object[]>();
+
+    public abstract void Init();
+
     protected void Bind<T>(Type type) where T : UnityEngine.Object // enum을 받아오기 위해 Type을 사용한다.
     {
         // 유니티와 관련된 모든 오브젝트들은 UnityEngine.Object로 받아올 수 있다.
@@ -35,7 +38,7 @@ public class UIBase : MonoBehaviour
     protected Image GetImage(int idx) { return Get<Image>(idx); }
     protected GameObject GetGameObejct(int idx) { return Get<GameObject>(idx); }
 
-    public static void AddUIEvent(GameObject go, Action<PointerEventData> action, UIEvent type = UIEvent.Click)
+    public static void BindEvent(GameObject go, Action<PointerEventData> action, UIEvent type = UIEvent.Click)
     {
         UIEventHandler evt = Util.GetOrAddComponent<UIEventHandler>(go);
         switch (type)
