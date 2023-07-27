@@ -10,14 +10,16 @@ public class MasterManager : MonoBehaviour
     ResourceManager resource = new ResourceManager();
     public static ResourceManager Resource { get { return Instance.resource; } }
 
-    EventManager _event = new EventManager();
-    public static EventManager Event { get {return Instance._event; } }
+    InputManager _input = new InputManager();
+    public static InputManager Input { get {return Instance._input; } }
     UIManager ui = new UIManager();
     public static UIManager UI {  get { return Instance.ui; } }
 
     SceneLoadManager scene = new SceneLoadManager();
     public static SceneLoadManager Scene { get { return Instance.scene; } }
-    
+
+    SoundManager sound = new SoundManager();
+    public static SoundManager Sound { get { return Instance.sound; } }
     void Awake()
     {
         if (instance == null)
@@ -30,11 +32,20 @@ public class MasterManager : MonoBehaviour
             }
             DontDestroyOnLoad(masterManager);
             instance = masterManager.GetComponent<MasterManager>();
+            instance.sound.Init();
         }    
     }
 
     void Update()
     {
-        _event.EventUpdate();
+        _input.EventUpdate();
+    }
+
+    public static void Clear()
+    {
+        Sound.Clear();
+        Input.Clear();
+        Scene.Clear();
+        UI.Clear();
     }
 }

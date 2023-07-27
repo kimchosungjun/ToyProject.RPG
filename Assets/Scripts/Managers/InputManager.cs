@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.EventSystems;
 
-public class EventManager 
+public class InputManager 
 {
     public Action playerMoveAction = null;
     public Action<MouseEvent> PlayerMouseMove = null;
@@ -32,5 +32,8 @@ public class EventManager
         }
     }
 
-
+    public void Clear()
+    {
+        PlayerMouseMove = null;
+    }
 }

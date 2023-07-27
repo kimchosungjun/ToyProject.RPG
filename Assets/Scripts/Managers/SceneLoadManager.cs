@@ -10,7 +10,7 @@ public class SceneLoadManager
 
     public void LoadScene(Scene scene)
     {
-        CurrentScene.Clear();
+        MasterManager.Clear();
         SceneManager.LoadScene(GetSceneName(scene));
     }
 
@@ -18,5 +18,10 @@ public class SceneLoadManager
     {
         string name = Enum.GetName(typeof(Scene),scene);
         return name;
+    }
+
+    public void Clear()
+    {
+        CurrentScene.Clear();
     }
 }

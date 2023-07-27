@@ -63,3 +63,10 @@ public enum Scene
     Lobby,
     Game
 }
+
+public enum Sound
+{
+    Bgm,
+    Effect,
+    MaxCound,
+}

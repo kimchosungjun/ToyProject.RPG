@@ -18,8 +18,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        MasterManager.Event.PlayerMouseMove -= PlayerInputMouse;
-        MasterManager.Event.PlayerMouseMove += PlayerInputMouse;
+        MasterManager.Input.PlayerMouseMove -= PlayerInputMouse;
+        MasterManager.Input.PlayerMouseMove += PlayerInputMouse;
     }
     public void PlayerInputMouse(MouseEvent evt)
     {
