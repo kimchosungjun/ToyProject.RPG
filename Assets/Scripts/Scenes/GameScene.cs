@@ -9,6 +9,10 @@ public class GameScene : BaseScene
         base.Init();
         MasterManager.UI.ShowSceneUI<UIInven>();
         SceneType = Scene.Game;
+       /* for (int i = 0; i < 5; i++)
+        {
+            MasterManager.Resource.Instantiate("Player");
+        }*/
     }
 
     public override void Clear()

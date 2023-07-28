@@ -10,6 +10,11 @@ public class LoginScene : BaseScene
     {
         base.Init();
         SceneType = Scene.Login;
+        List<GameObject> list = new List<GameObject>();
+        for(int i=0; i<5; i++)
+            list.Add(MasterManager.Resource.Instantiate("Player"));
+        foreach (GameObject obj in list)
+            MasterManager.Resource.Destroy(obj);
     }
     public override void Clear()
     {

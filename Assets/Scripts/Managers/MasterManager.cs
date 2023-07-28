@@ -6,20 +6,19 @@ public class MasterManager : MonoBehaviour
 {
     static MasterManager instance;
     static MasterManager Instance { get { return instance; } }
-
     ResourceManager resource = new ResourceManager();
     public static ResourceManager Resource { get { return Instance.resource; } }
-
     InputManager _input = new InputManager();
     public static InputManager Input { get {return Instance._input; } }
     UIManager ui = new UIManager();
     public static UIManager UI {  get { return Instance.ui; } }
-
     SceneLoadManager scene = new SceneLoadManager();
     public static SceneLoadManager Scene { get { return Instance.scene; } }
-
     SoundManager sound = new SoundManager();
     public static SoundManager Sound { get { return Instance.sound; } }
+    PoolManager pool = new PoolManager();
+    public static PoolManager Pool {  get { return Instance.pool;  } }
+
     void Awake()
     {
         if (instance == null)
@@ -33,6 +32,7 @@ public class MasterManager : MonoBehaviour
             DontDestroyOnLoad(masterManager);
             instance = masterManager.GetComponent<MasterManager>();
             instance.sound.Init();
+            instance.pool.Init();
         }    
     }
 
@@ -47,5 +47,6 @@ public class MasterManager : MonoBehaviour
         Input.Clear();
         Scene.Clear();
         UI.Clear();
+        Pool.Clear();
     }
 }

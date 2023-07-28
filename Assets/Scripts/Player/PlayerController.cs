@@ -1,19 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
     Animator anim;
+    NavMeshAgent nav;
     PlayerState playerState = PlayerState.Idle;
 
     [Header("플레이어 이동 관련 변수")]
     Vector3 destinationPos;
     [SerializeField] float playerSpeed = 10f;
-
+    [SerializeField] LayerMask blockLayer;
     void Awake()
     {
         anim = gameObject.GetComponent<Animator>();
+        nav = gameObject.GetComponent<NavMeshAgent>();
     }
 
     void Start()
@@ -25,12 +28,15 @@ public class PlayerController : MonoBehaviour
     {
         if (playerState==PlayerState.Dead)
             return;
-        playerState = PlayerState.Move;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 100f, Color.red, 1.0f);
         RaycastHit rayHit;
         if (Physics.Raycast(ray, out rayHit, 100.0f, LayerMask.GetMask("Ground")))
+        {
             destinationPos = rayHit.point;
+            playerState = PlayerState.Move;
+        }
+
     }
 
     void Update()
@@ -65,7 +71,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             float moveDist = Mathf.Clamp(playerSpeed * Time.deltaTime, 0, dir.magnitude);
-            transform.position += dir.normalized * moveDist;
+            nav.Move(dir.normalized * moveDist);
+            Debug.DrawRay(transform.position+ Vector3.up, dir.normalized, Color.red);
+            if (Physics.Raycast(transform.position + Vector3.up, dir.normalized, 1.0f, blockLayer))
+            {
+                playerState = PlayerState.Idle; 
+                return;
+            }
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
         }
     }
