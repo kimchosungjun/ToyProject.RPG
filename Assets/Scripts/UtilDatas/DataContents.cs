@@ -2,25 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-#region Temp
-public class Temp
+namespace Data
 {
-    public int characterID;
-    public float attackPower;
-    public string characterName;
+    #region Stat
+    public class Stat
+    {
+        public int hp;
+        public int level;
+    }
+
+    public class StatData : ILoader<int, Stat>
+    {
+        public List<Stat> statList = new List<Stat>();
+        public Dictionary<int, Stat> MakeDict()
+        {
+            Dictionary<int, Stat> dict = new Dictionary<int, Stat>();
+            foreach (Stat stat in statList)
+            {
+                dict.Add(stat.level, stat);
+            }
+            return dict;
+        }
+    }
+    #endregion
 }
 
-public class TempData : ILoader<int, Temp>
-{
-    public List<Temp> tempList = new List<Temp>();
-    public Dictionary<int, Temp> MakeDict() 
-    {
-        Dictionary<int, Temp> dict = new Dictionary<int, Temp>();
-        foreach (Temp temp in tempList)
-        {
-            dict.Add(temp.characterID, temp);
-        }
-        return dict;
-    }
-}
-#endregion

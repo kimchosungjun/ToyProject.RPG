@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Layer
+{
+    Player=3,
+    Ground=6,
+    Monster=7,
+    Block=8,
+}
+
 public enum CameraMode
 {
     QuarterView
@@ -18,6 +26,7 @@ public enum PlayerState
     Idle,
     Move,
     Jump,
+    Skill,
     Hit,
     Dead
 }

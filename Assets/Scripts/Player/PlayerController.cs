@@ -7,14 +7,16 @@ public class PlayerController : MonoBehaviour
 {
     Animator anim;
     NavMeshAgent nav;
+    PlayerStat playerStat;
     PlayerState playerState = PlayerState.Idle;
 
     [Header("플레이어 이동 관련 변수")]
     Vector3 destinationPos;
-    [SerializeField] float playerSpeed = 10f;
     [SerializeField] LayerMask blockLayer;
+    int mongroundLayer = (1 << (int)Layer.Monster) | (1 << (int)Layer.Ground);
     void Awake()
     {
+        playerStat = gameObject.GetComponent<PlayerStat>();
         anim = gameObject.GetComponent<Animator>();
         nav = gameObject.GetComponent<NavMeshAgent>();
     }
@@ -31,10 +33,14 @@ public class PlayerController : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(Camera.main.transform.position, ray.direction * 100f, Color.red, 1.0f);
         RaycastHit rayHit;
-        if (Physics.Raycast(ray, out rayHit, 100.0f, LayerMask.GetMask("Ground")))
+        if (Physics.Raycast(ray, out rayHit, 100.0f, mongroundLayer))
         {
             destinationPos = rayHit.point;
             playerState = PlayerState.Move;
+            if (rayHit.collider.gameObject.layer == ((int)Layer.Monster))
+                Debug.Log("Mon!");
+            else
+                Debug.Log("Player!");
         }
 
     }
@@ -70,7 +76,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            float moveDist = Mathf.Clamp(playerSpeed * Time.deltaTime, 0, dir.magnitude);
+            float moveDist = Mathf.Clamp(playerStat.Speed * Time.deltaTime, 0, dir.magnitude);
             nav.Move(dir.normalized * moveDist);
             Debug.DrawRay(transform.position+ Vector3.up, dir.normalized, Color.red);
             if (Physics.Raycast(transform.position + Vector3.up, dir.normalized, 1.0f, blockLayer))
@@ -89,7 +95,7 @@ public class PlayerController : MonoBehaviour
     void UpdateMove()
     {
         PlayerMove();
-        anim.SetFloat("Speed", playerSpeed);
+        anim.SetFloat("Speed", playerStat.Speed);
     }
     void UpdateJump()
     {
