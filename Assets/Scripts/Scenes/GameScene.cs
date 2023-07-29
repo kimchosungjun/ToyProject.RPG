@@ -7,8 +7,9 @@ public class GameScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        MasterManager.UI.ShowSceneUI<UIInven>();
+        //MasterManager.UI.ShowSceneUI<UIInven>();
         SceneType = Scene.Game;
+        gameObject.GetOrAddComponent<CursorController>();
        /* for (int i = 0; i < 5; i++)
         {
             MasterManager.Resource.Instantiate("Player");

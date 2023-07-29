@@ -10,6 +10,13 @@ public enum Layer
     Block=8,
 }
 
+public enum CursorType
+{
+    None,
+    Attack,
+    Hand
+}
+
 public enum CameraMode
 {
     QuarterView
@@ -18,16 +25,18 @@ public enum CameraMode
 public enum MouseEvent
 {
     Press,
-    Click
+    PointerDown,
+    PointerUp,
+    Click,
 }
 
-public enum PlayerState
+public enum PlayerState // 애니메이션
 {
     Idle,
     Move,
     Jump,
     Skill,
-    Hit,
+    Damaged,
     Dead
 }
 
