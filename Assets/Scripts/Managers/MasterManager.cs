@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MasterManager : MonoBehaviour
 {
+    #region Core
     static MasterManager instance;
     static MasterManager Instance { get { return instance; } }
     ResourceManager resource = new ResourceManager();
@@ -17,7 +18,14 @@ public class MasterManager : MonoBehaviour
     SoundManager sound = new SoundManager();
     public static SoundManager Sound { get { return Instance.sound; } }
     PoolManager pool = new PoolManager();
+
+    DataManager data = new DataManager();
+    public static DataManager Data { get { return Instance.data; } }
     public static PoolManager Pool {  get { return Instance.pool;  } }
+
+    GameManager game = new GameManager();
+    public static GameManager Game { get { return Instance.game; } }
+    #endregion
 
     void Awake()
     {
@@ -32,6 +40,7 @@ public class MasterManager : MonoBehaviour
             DontDestroyOnLoad(masterManager);
             instance = masterManager.GetComponent<MasterManager>();
             instance.sound.Init();
+            instance.data.Init();
             instance.pool.Init();
         }    
     }

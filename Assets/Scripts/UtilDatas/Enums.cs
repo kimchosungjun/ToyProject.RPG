@@ -30,7 +30,7 @@ public enum MouseEvent
     Click,
 }
 
-public enum PlayerState // 애니메이션
+public enum AnimationState // 애니메이션
 {
     Idle,
     Move,
@@ -87,4 +87,11 @@ public enum Sound
     Bgm,
     Effect,
     MaxCound,
+}
+
+public enum WorldObject
+{
+    Player,
+    Monster,
+    UnKnown
 }

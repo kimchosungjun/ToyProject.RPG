@@ -7,8 +7,10 @@ namespace Data
     #region Stat
     public class Stat
     {
-        public int hp;
         public int level;
+        public int maxHp;
+        public int attack;
+        public int totalExp;
     }
 
     public class StatData : ILoader<int, Stat>

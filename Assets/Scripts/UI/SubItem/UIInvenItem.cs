@@ -7,11 +7,6 @@ public class UIInvenItem : UIBase
 {
     string itemName;
 
-    void Start()
-    {
-        Init();
-    }
-
     public override void Init()
     { 
         Bind<GameObject>(typeof(InvenItem));

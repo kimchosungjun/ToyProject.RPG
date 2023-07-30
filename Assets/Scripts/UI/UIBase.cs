@@ -11,6 +11,11 @@ public abstract class UIBase : MonoBehaviour
 
     public abstract void Init();
 
+    protected void Start()
+    {
+        Init();
+    }
+
     protected void Bind<T>(Type type) where T : UnityEngine.Object // enum을 받아오기 위해 Type을 사용한다.
     {
         // 유니티와 관련된 모든 오브젝트들은 UnityEngine.Object로 받아올 수 있다.

@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class UIInven : UIScene
 {
-    void Start()
-    {
-        Init();    
-    }
 
     public override void Init()
     {

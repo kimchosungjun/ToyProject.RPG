@@ -8,11 +8,7 @@ using UnityEngine.EventSystems;
 public class UIButton : UIPopup
 {
     int score = 0;
-    
-    void Start()
-    {
-        Init();    
-    }
+   
 
     public override void Init()
     {

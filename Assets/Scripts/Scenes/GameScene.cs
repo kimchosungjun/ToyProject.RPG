@@ -7,13 +7,18 @@ public class GameScene : BaseScene
     protected override void Init()
     {
         base.Init();
-        //MasterManager.UI.ShowSceneUI<UIInven>();
         SceneType = Scene.Game;
         gameObject.GetOrAddComponent<CursorController>();
-       /* for (int i = 0; i < 5; i++)
-        {
-            MasterManager.Resource.Instantiate("Player");
-        }*/
+        Dictionary<int, Data.Stat> dict = MasterManager.Data.statDict;
+        gameObject.GetOrAddComponent<CursorController>();
+        GameObject player = MasterManager.Game.Spawn(WorldObject.Player, "Player");
+        MasterManager.Game.Spawn(WorldObject.Monster, "Monster");
+        Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
+        //MasterManager.UI.ShowSceneUI<UIInven>();
+        /* for (int i = 0; i < 5; i++)
+         {
+             MasterManager.Resource.Instantiate("Player");
+         }*/
     }
 
     public override void Clear()

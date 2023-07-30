@@ -7056,8 +7056,8 @@ GameObject:
   - component: {fileID: 6923552494954318200}
   - component: {fileID: 6923552495327343315}
   - component: {fileID: 5717424243723276684}
-  - component: {fileID: 5583514015322956066}
   - component: {fileID: 5583514015322956061}
+  - component: {fileID: 3272364470396808712}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -7114,6 +7114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b09a4782e7fb6744c872b218b16fe253, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lockTarget: {fileID: 0}
+  destinationPos: {x: 0, y: 0, z: 0}
   playerState: 0
   blockLayer:
     serializedVersion: 2
@@ -7131,28 +7133,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isUsing: 0
---- !u!195 &5583514015322956066
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6923552494946941950}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 0
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!114 &5583514015322956061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7173,6 +7153,20 @@ MonoBehaviour:
   speed: 0
   exp: 0
   gold: 0
+--- !u!136 &3272364470396808712
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6923552494946941950}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.0420475
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.52102375, z: 0}
 --- !u!1 &7689766893965053429
 GameObject:
   m_ObjectHideFlags: 0

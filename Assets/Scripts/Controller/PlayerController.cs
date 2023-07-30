@@ -3,68 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
-    Animator anim;
-    NavMeshAgent nav;
-    PlayerStat playerStat;
-
-
-    [SerializeField] PlayerState playerState = PlayerState.Idle;
-    public PlayerState State { get { return playerState; }
-        set 
-        {
-            playerState = value;
-            switch (playerState)
-            {
-                case PlayerState.Idle:
-                    anim.CrossFade("Idle",0.1f);
-                    break;
-                case PlayerState.Move:
-                    anim.CrossFade("Run", 0.1f);
-                    break;
-                case PlayerState.Skill:
-                    anim.CrossFade("Attack", 0.1f,-1,0);
-                    break;
-                case PlayerState.Dead:
-                    break;
-            }
-        } 
-    }
-    GameObject lockTarget;
-   
-    [Header("플레이어 이동 관련 변수")]
-    Vector3 destinationPos;
-    [SerializeField] LayerMask blockLayer;
     int mongroundLayer = (1 << (int)Layer.Monster) | (1 << (int)Layer.Ground);
+    [SerializeField] LayerMask blockLayer;
+    PlayerStat playerStat;
     bool stopSkill = false;
-
-    void Awake()
+    private void Awake()
     {
         playerStat = gameObject.GetComponent<PlayerStat>();
-        anim = gameObject.GetComponent<Animator>();
-        nav = gameObject.GetComponent<NavMeshAgent>();
     }
 
-    void Start()
+    public override void Init()
     {
+        WorldObjectType = WorldObject.Player;
         MasterManager.Input.PlayerMouseMove -= PlayerInputMouse;
         MasterManager.Input.PlayerMouseMove += PlayerInputMouse;
+        MasterManager.UI.MakeWorldSpaceUI<UIHpBar>(transform);
     }
 
     public void PlayerInputMouse(MouseEvent evt)
     {
-        if (State==PlayerState.Dead)
+        if (State==AnimationState.Dead)
             return;
         switch (State)
         {
-            case PlayerState.Idle:
+            case AnimationState.Idle:
                 OnMouseEventIdle(evt);
                 break;
-            case PlayerState.Move:
+            case AnimationState.Move:
                 OnMouseEventIdle(evt);
                 break;
-            case PlayerState.Skill:
+            case AnimationState.Skill:
                 {
                     if (evt == MouseEvent.PointerUp)
                         stopSkill = true;
@@ -75,13 +45,19 @@ public class PlayerController : MonoBehaviour
 
     void HitEvent()
     {
+        if (lockTarget != null)
+        {
+            Stat targetStat = lockTarget.GetComponent<Stat>();
+            targetStat.OnAttacked(playerStat);
+        }
+
         if (stopSkill)
         {
-            State = PlayerState.Idle;
+            State = AnimationState.Idle;
         }
         else
         {
-            State = PlayerState.Skill;
+            State = AnimationState.Skill;
         }   
     }
 
@@ -99,7 +75,7 @@ public class PlayerController : MonoBehaviour
                     if (rayCastHit)
                     {
                         destinationPos = rayHit.point;
-                        State = PlayerState.Move;
+                        State = AnimationState.Move;
                         stopSkill = false;
                         if (rayHit.collider.gameObject.layer == ((int)Layer.Monster))
                             lockTarget = rayHit.collider.gameObject;
@@ -120,74 +96,47 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        switch (playerState)
-        {
-            case PlayerState.Idle:
-                UpdateIdle();
-                break;
-            case PlayerState.Move:
-                UpdateMove();
-                break;
-            case PlayerState.Jump:
-                UpdateJump();
-                break;
-            case PlayerState.Skill:
-                UpdateSkill();
-                break;
-            case PlayerState.Damaged:
-                UpdateDamaged();
-                break;
-            case PlayerState.Dead:
-                UpdateDead();
-                break;
-        }
-    }
+
     #region UpdateState
 
-    void UpdateIdle() 
+    protected override void UpdateIdle() 
     {
-        anim.SetFloat("Speed", 0);
+
     }
 
-    void UpdateMove()
+    protected override void UpdateMove()
     {
         if (lockTarget != null)
         {
+            destinationPos = lockTarget.transform.position;
             float distance = (destinationPos - transform.position).magnitude;
             if (distance <= 1)
             {
-                State = PlayerState.Skill;
+                State = AnimationState.Skill;
                 return;
             }
         }
         Vector3 dir = destinationPos - transform.position;
         if (dir.magnitude < 0.1f)
         {
-            State = PlayerState.Idle;
+            State = AnimationState.Idle;
         }
         else
         {
-            float moveDist = Mathf.Clamp(playerStat.Speed * Time.deltaTime, 0, dir.magnitude);
-            nav.Move(dir.normalized * moveDist);
             Debug.DrawRay(transform.position + Vector3.up, dir.normalized, Color.red);
             if (Physics.Raycast(transform.position + Vector3.up, dir.normalized, 1.0f, blockLayer))
             {
                 if (Input.GetMouseButton(0) == false)
-                    State = PlayerState.Idle;
+                    State = AnimationState.Idle;
                 return;
             }
+            float moveDist = Mathf.Clamp(playerStat.Speed * Time.deltaTime, 0, dir.magnitude);
+            transform.position += dir.normalized * moveDist;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), 10 * Time.deltaTime);
         }
     }
 
-    void UpdateJump()
-    {
-        
-    }
-
-    void UpdateSkill()
+    protected override void UpdateSkill()
     {
         if (lockTarget != null)
         {
@@ -197,12 +146,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UpdateDamaged()
-    {
-        
-    }
-
-    void UpdateDead()
+    protected override void UpdateDead()
     {
         
     }
