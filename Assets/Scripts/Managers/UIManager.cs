@@ -30,7 +30,6 @@ public class UIManager
     }
     public T MakeWorldSpaceUI<T>(Transform parent = null, string name = null) where T : UIBase
     {
-
         if (string.IsNullOrEmpty(name))
             name = typeof(T).Name;
         GameObject go = MasterManager.Resource.Instantiate($"UI/WorldSpace/{name}");

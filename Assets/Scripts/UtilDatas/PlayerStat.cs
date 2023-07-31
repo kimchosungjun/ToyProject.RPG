@@ -12,7 +12,7 @@ public class PlayerStat : Stat
     private void Start()
     {
         level = 1;
-        //SetStat(level);
+        SetStat(level);
         attack = 100;
         maxHp = 100;
         hp = 100;

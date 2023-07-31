@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Data
 {
     #region Stat
+    [Serializable]
     public class Stat
     {
         public int level;
