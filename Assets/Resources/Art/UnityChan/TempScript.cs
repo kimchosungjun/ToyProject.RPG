@@ -10,6 +10,7 @@ public class TempScript : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
+            //transform.LookAt(Vector3.forward);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(Vector3.forward), 0.2f);
             transform.position += Vector3.forward * Time.deltaTime * speed;
         }

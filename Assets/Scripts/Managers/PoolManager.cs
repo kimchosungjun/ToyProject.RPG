@@ -62,7 +62,6 @@ public class PoolManager
         {
             root = new GameObject { name = "PoolRoot" }.transform;
             Object.DontDestroyOnLoad(root);
-           
         }
     }
 

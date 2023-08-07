@@ -60,6 +60,7 @@ public class SoundManager
             AudioClip audioClip = GetOrAddAudioClip(path);
             if (audioClip == null)
                 return;
+                
             AudioSource source = audioSource[(int)Sound.Effect];
             source.pitch = pitch;
             source.PlayOneShot(audioClip);
