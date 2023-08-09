@@ -31,3 +31,25 @@ namespace Data
     #endregion
 }
 
+[Serializable]
+public class ItemInfo
+{
+    public int ID;
+    public string Name;
+    public string Description;
+}
+
+public class ItemData : ILoader<int, ItemInfo>
+{
+    public List<ItemInfo> Items = new List<ItemInfo>();
+    public Dictionary<int,ItemInfo> MakeDict()
+    {
+        Dictionary<int, ItemInfo> dict = new Dictionary<int, ItemInfo>();
+        foreach (ItemInfo itemInfo in Items)
+        {
+            dict.Add(itemInfo.ID, itemInfo);
+        }
+        return dict;
+    }
+}
+
