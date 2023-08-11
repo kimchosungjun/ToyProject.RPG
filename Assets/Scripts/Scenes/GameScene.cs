@@ -14,8 +14,9 @@ public class GameScene : BaseScene
      
         GameObject player = MasterManager.Game.Spawn(WorldObject.Player, "Player");
         MasterManager.Game.Spawn(WorldObject.Monster, "Monster");
+        player.transform.position += Vector3.right * 20;
         Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
-        MasterManager.Sound.Play("UnityChan/univ0001",Sound.Bgm);
+        MasterManager.Sound.Play("BGM/Default",Sound.Bgm,1,0.1f);
         //MasterManager.UI.ShowSceneUI<UIInven>();
         /* for (int i = 0; i < 5; i++)
          {

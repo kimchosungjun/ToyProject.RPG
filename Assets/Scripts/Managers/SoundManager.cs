@@ -39,7 +39,7 @@ public class SoundManager
         audioClips.Clear();
     }
 
-    public void Play(string path, Sound type = Sound.Effect, float pitch = 1.0f)
+    public void Play(string path, Sound type = Sound.Effect, float pitch = 1.0f, float volume =1.0f)
     {
         if (path.Contains("Audio/") == false)
             path = $"Audio/{path}";
@@ -53,6 +53,7 @@ public class SoundManager
                 source.Stop();  
             source.pitch = pitch;
             source.clip = audioClip;
+            source.volume = volume;
             source.Play();
         }
         else
