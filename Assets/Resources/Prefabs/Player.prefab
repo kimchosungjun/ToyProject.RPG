@@ -7150,7 +7150,7 @@ MonoBehaviour:
   maxHp: 0
   attack: 0
   defence: 0
-  speed: 0
+  speed: 10
   exp: 0
   gold: 0
 --- !u!136 &3272364470396808712
