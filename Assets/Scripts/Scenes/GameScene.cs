@@ -12,11 +12,11 @@ public class GameScene : BaseScene
         Dictionary<int, Data.Stat> dict = MasterManager.Data.statDict;
         gameObject.GetOrAddComponent<CursorController>();
      
-        GameObject player = MasterManager.Game.Spawn(WorldObject.Player, "Player");
+        //GameObject player = MasterManager.Game.Spawn(WorldObject.Player, "Player");
         MasterManager.Game.Spawn(WorldObject.Monster, "Monster");
-        player.transform.position += Vector3.right * 20;
-        Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
-        MasterManager.Sound.Play("BGM/Default",Sound.Bgm,1,0.1f);
+        //player.transform.position += Vector3.right * 20;
+        //Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
+        //MasterManager.Sound.Play("BGM/Default",Sound.Bgm,1,0.1f);
         //MasterManager.UI.ShowSceneUI<UIInven>();
         /* for (int i = 0; i < 5; i++)
          {
