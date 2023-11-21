@@ -1,0 +1,19 @@
+{
+  "Monsters": [
+    {
+      "Position": "100",
+      "Name": "검",
+      "Description": "날카로운 검이다."
+    },
+    {
+      "Position": "101",
+      "Name": "방패",
+      "Description": "듬직한 방패다."
+    },
+    {
+      "Position": "102",
+      "Name": "표창",
+      "Description": "날카로운 표창이다."
+    }
+  ]
+}
