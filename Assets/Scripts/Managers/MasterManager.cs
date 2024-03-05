@@ -39,7 +39,7 @@ public class MasterManager : MonoBehaviour
             }
             DontDestroyOnLoad(masterManager);
             instance = masterManager.GetComponent<MasterManager>();
-            //instance.sound.Init();
+            instance.sound.Init();
             instance.data.Init();
             instance.pool.Init();
         }    
