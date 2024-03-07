@@ -5,32 +5,66 @@ using UnityEngine.AI;
 
 public class NavAnimation : MonoBehaviour
 {
-    public Animator anim;
-    public NavMeshAgent nav;
+    //public GameObject cube;
+    Animator anim;
+    NavMeshAgent nav;
 
-    public Vector3 worldDeltaVec;
-    public Vector2 groundVec;
-    public Vector2 velocity = Vector2.zero;
+    Vector2 velocity;
+    Vector2 smoothDeltaPos;
 
-    void Start()
+    private void Awake()
     {
-        nav.updatePosition = false;    
-    }
+        anim = GetComponent<Animator>();
+        nav = GetComponent<NavMeshAgent>();
 
-    void Update()
-    {
-        worldDeltaVec = nav.nextPosition - transform.position;
-        groundVec.x = Vector3.Dot(transform.right, worldDeltaVec);
-        groundVec.y = Vector3.Dot(transform.forward, worldDeltaVec);
-        velocity = (Time.deltaTime > 1e-5f)?  groundVec/Time.deltaTime : velocity = Vector2.zero;
-        bool shouldMove = velocity.magnitude > 0.025f && nav.remainingDistance > nav.radius;
-        anim.SetBool("Walk",shouldMove);
-        anim.SetFloat("VelX",velocity.x);
-        anim.SetFloat("VelY",velocity.y);
+        anim.applyRootMotion = true;
+        nav.updatePosition = false;
+        nav.updateRotation = true;
     }
 
     private void OnAnimatorMove()
     {
-        transform.position = nav.nextPosition;
+        Vector3 rootPos = anim.rootPosition;
+        rootPos.y = nav.nextPosition.y;
+        transform.position = rootPos;
+        //nav.nextPosition = rootPos;
+    }
+
+    private void Update()
+    {
+        //nav.SetDestination(cube.transform.position);
+        Vector3 worldDeltaPos = nav.nextPosition - transform.position;
+        worldDeltaPos.y = 0;
+        float dx = Vector3.Dot(transform.right, worldDeltaPos);
+        float dy = Vector3.Dot(transform.forward, worldDeltaPos);
+        Vector2 deltaPos = new Vector2(dx, dy);
+        float smooth = Mathf.Min(1, Time.deltaTime / 0.1f);
+        smoothDeltaPos = Vector2.Lerp(smoothDeltaPos, deltaPos, smooth);
+
+        velocity = smoothDeltaPos / Time.deltaTime;
+        if (nav.remainingDistance <= nav.stoppingDistance)
+        {
+            velocity = Vector2.Lerp(
+                Vector2.zero,
+                velocity,
+                nav.remainingDistance / nav.stoppingDistance
+            );
+        }
+
+        bool shouldMove = velocity.magnitude > 0.5f
+            && nav.remainingDistance > nav.stoppingDistance;
+
+        anim.SetBool("Walk", shouldMove);
+        anim.SetFloat("VelY", velocity.magnitude);
+
+        float deltaMagnitude = worldDeltaPos.magnitude;
+        if (deltaMagnitude > nav.radius / 2f)
+        {
+            transform.position = Vector3.Lerp(
+                anim.rootPosition,
+                nav.nextPosition,
+                smooth
+            );
+        }
     }
 }

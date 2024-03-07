@@ -5,8 +5,8 @@ using UnityEngine;
 public class HeadRotate : MonoBehaviour
 {
     public Transform Player;
-    public float headWeight;
-    public float bodyWeight;
+    public float headWeight=1.0F;
+    public float bodyWeight=0.5F;
     private Animator anim;
     private void Awake()
     {
