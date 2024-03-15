@@ -58,7 +58,7 @@ public class NavAnimation : MonoBehaviour
         bool shouldMove = Velocity.magnitude > 0.5f
             && Agent.remainingDistance > Agent.stoppingDistance;
         if (shouldMove)
-            Animator.speed = 2f;
+            Animator.speed = 5f;
         else
             Animator.speed = 1f;
         Animator.SetBool("Walk", shouldMove);
